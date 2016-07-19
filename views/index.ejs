@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
@@ -16,7 +14,6 @@
     <script src="/js/bundle.js"></script>
     <link rel="stylesheet" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
 </head>
 
 <body ng-app='myApp' ng-controller='mainCtrl'>
@@ -36,12 +33,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#/test" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Test<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/testAdd">Test</a></li>
-                        </ul>
-                    </li>
+                    <li><a ng-if='isAuthenticated()' ui-sref="favorites">Favorites</a></li>
+                    <li><a ui-sref="home">Search</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a ui-sref='login' ng-if='!isAuthenticated()'>Login</a></li>

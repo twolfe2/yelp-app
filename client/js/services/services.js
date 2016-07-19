@@ -4,7 +4,7 @@ var app = angular.module('myApp');
 
 app.service('Business', function($http, $q) {
   this.search = (name, location) => {
-    return $http.get(`/api/businesses/search/${name}/${location}`)
+    return $http.get(`api/businesses/search/${name}/${location}`)
       .then(res => {
         return res.data;
       })
@@ -14,7 +14,7 @@ app.service('Business', function($http, $q) {
 
   };
   this.details = (yelpId) => {
-    return $http.get(`/api/businesses/details/${yelpId}`)
+    return $http.get(`api/businesses/details/${yelpId}`)
       .then(res => {
         console.log('details', res);
         return res.data;
@@ -37,3 +37,20 @@ app.service('Business', function($http, $q) {
       });
   }
 });
+
+
+app.service('User', function($http) {
+  this.getFavorites = () => {
+
+    return $http.get('api/users/favorites')
+      .then(res => {
+        console.log('details', res);
+        return res.data.favorites;
+      })
+      .catch(err => {
+        if (err) console.log(err);
+      });
+
+  }
+
+})

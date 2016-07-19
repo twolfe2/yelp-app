@@ -34,6 +34,20 @@ router.post('/removeFavorite', User.authorize({admin: false}), (req,res) => {
 });
 
 
+
+
+router.get('/favorites', User.authorize({admin: false}), (req,res) => {
+  // console.log(req.user);
+  User.findById(req.user._id)
+    .populate('favorites')
+    .exec((err, user) => {
+      console.log('user', user);
+      res.send(user);
+  });
+  
+
+});
+
 router.get('/profile', User.authorize({admin: false}), (req,res) => {
   // console.log(req.user);
   res.send(req.user);

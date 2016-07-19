@@ -35,22 +35,28 @@ userSchema.statics.addFavorite = function(userId, yelpInfo, cb) {
       if (err) return cb(err);
       if (business) {
         user.favorites.push(business._id);
-        console.log(userId);
-        business.users.push(userId);
-        business.save((err, savedBus) => {
-          if (err) return cb(err);
-          business.favoriteIncrease((err, business) => {
+        user.save((err, savedUsr) => {
+          if (err) return cb(err)
+          business.users.push(userId);
+          business.save((err, savedBus) => {
             if (err) return cb(err);
-            cb(null, business);
+            // console.log('savedBus', savedBus);
+            business.favoriteIncrease((err, business) => {
+              if (err) return cb(err);
+              cb(null, business);
+            });
+
           });
 
-        });
+        })
+
 
       } else {
-        Business.create({ yelpId: yelpInfo.id, name: yelpInfo.name, favoriteCount: 1 }, (err, savedBus) => {
+        Business.create({ yelpId: yelpInfo.id, name: yelpInfo.name, favoriteCount: 1, users: [userId] }, (err, savedBus) => {
           if (err) return cb(err);
           user.favorites.push(savedBus._id);
-          cb(null, savedBus);
+          user.save(cb);
+          // cb(null, savedBus);
         });
       };
     });
@@ -61,22 +67,22 @@ userSchema.statics.addFavorite = function(userId, yelpInfo, cb) {
 userSchema.statics.removeFavorite = function(userId, yelpInfo, cb) {
   this.findById(userId, (err, user) => {
     if (err) return cb(err);
-    
+
     console.log(user);
 
     Business.findOne({ yelpId: yelpInfo.id }, (err, business) => {
       if (err) return cb(err);
       business.users.pull(user._id);
-      business.favorites--;
+      business.favoriteCount--;
       business.save((err, savedBus) => {
-        if(err) return cb(err);
+        if (err) return cb(err);
         console.log('business:', savedBus);
         user.favorites.pull(business._id);
         user.save(cb);
       });
 
 
- 
+
     });
   });
 };

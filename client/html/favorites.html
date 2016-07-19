@@ -1,0 +1,16 @@
+<h1>Favorites</h1>
+<div class="row">
+  <div class="col-sm-6 col-md-4" ng-repeat="business in favorites" >
+    <div class="thumbnail">
+    <a ui-sref="details({yelpId: business.yelpId })">
+    <div>
+      
+      <div class="caption">
+        <h3>{{business.name}}-{{business.location.city}}</h3>
+        <h5>Favorites: {{business.favoriteCount}}</h5>
+      </div>
+      </div>
+      </a>
+    </div>
+  </div>
+</div>

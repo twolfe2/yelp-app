@@ -5,6 +5,9 @@
 var app = angular.module('myApp');
 
 
+app.controller('favoritesCtrl', function($scope, Favorites) {
+  $scope.favorites = Favorites;
+})
 
 
 app.controller('mainCtrl', function($scope, $state, $auth, $rootScope) {
@@ -18,6 +21,7 @@ app.controller('mainCtrl', function($scope, $state, $auth, $rootScope) {
   $scope.logout = () => {
     $auth.logout();
     $state.go('home');
+    
   };
 
   // $scope.authenticate = provider => {
@@ -48,6 +52,9 @@ app.controller('searchCtrl', function($scope, $state, $stateParams, Businesses) 
 
 app.controller('detailsCtrl', function($scope, $state, $stateParams, Details, Business,$rootScope, $auth) {
   $scope.authenticated = false;
+  if($auth.isAuthenticated()) {
+    $scope.authenticated = true;
+  }
   console.log('details ctrl');
   console.log(Details);
   $scope.details = Details;
@@ -65,11 +72,13 @@ app.controller('detailsCtrl', function($scope, $state, $stateParams, Details, Bu
       Business.addFavorite($scope.details.yelpInfo)
         .then(res => {
           console.log(res.data);
+          $scope.details.favoriteCount = res.data.favoriteCount;
         });
     } else {
       Business.removeFavorite($scope.details.yelpInfo)
         .then(res => {
           console.log(res.data);
+          $scope.details.favoriteCount = res.data.favoriteCount;
         })
     }
   };
@@ -77,6 +86,8 @@ app.controller('detailsCtrl', function($scope, $state, $stateParams, Details, Bu
 
 
 });
+
+
 
 app.controller('loginCtrl', function($scope, $state, $auth, $rootScope) {
   // console.log('loginCtrl!');

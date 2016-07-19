@@ -4,9 +4,11 @@
         <div class="thumbnail">
             <img src="{{details.yelpInfo.image_url}}" alt="{{details.yelpInfo.name}} photo">
             <div class="caption">
-                <h3>{{details.yelpInfo.name}}-{{details.yelpInfo.location.city}}</h3>
-                <p>{{details.yelpInfo.snippet_text}}</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a>
+                <h3>{{details.yelpInfo.name}}-{{details.yelpInfo.location.city}}</h3><img src="{{details.yelpInfo.rating_img_url_large}}" alt="">
+                <p>Review: {{details.yelpInfo.snippet_text}}</p>
+                <p ng-if='details.favoriteCount'>Number of Favorites: {{details.favoriteCount}}</p>
+                <p><a href="{{details.yelpInfo.url}}" class="btn btn-primary" role="button">Yelp Page</a> 
+        <a href="tel:{{details.yelpInfo.phone}}" class="btn btn-default" role="button">&#9743;</a>
                     <span ng-if='authenticated'><input type="checkbox" autocomplete="off" ng-model="favorite" ng-change='toggleFavorite(favorite)'> Favorite</span>
                 </p>
             </div>

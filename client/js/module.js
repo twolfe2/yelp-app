@@ -22,6 +22,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: '/html/home.html',
       controller: 'homeCtrl'
     })
+    .state('favorites', {
+      url: '/favorites', 
+      templateUrl: '/html/favorites.html',
+      controller: 'favoritesCtrl',
+      resolve: {
+        Favorites: function(User) {
+          return User.getFavorites();
+        }
+      }
+    })
     .state('register', {
       url: '/register',
       templateUrl: '/html/register.html',
@@ -53,6 +63,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
       }
     })
+
 
   $urlRouterProvider.otherwise('/');
 })
