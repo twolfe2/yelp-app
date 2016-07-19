@@ -37,7 +37,9 @@ app.controller('mainCtrl', function($scope, $state, $auth, $rootScope) {
 });
 
 app.controller('homeCtrl', function($scope, $state, Business) {
+  $scope.loading=false;
   $scope.businessSearch = () => {
+        $scope.loading = true;
         $state.go('search', {name: $scope.businessName, location: $scope.businessLocation});
   };
 });
