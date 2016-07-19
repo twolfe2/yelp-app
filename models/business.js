@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const businessSchema = new mongoose.Schema({
   yelpId: { type: String, required: true },
   favoriteCount: { type: Number, default: 0 },
-  name: { type: String }
+  name: { type: String },
+  users: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 

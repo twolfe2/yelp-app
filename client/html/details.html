@@ -1,0 +1,15 @@
+<h1>Details</h1>
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <div class="thumbnail">
+            <img src="{{details.yelpInfo.image_url}}" alt="{{details.yelpInfo.name}} photo">
+            <div class="caption">
+                <h3>{{details.yelpInfo.name}}-{{details.yelpInfo.location.city}}</h3>
+                <p>{{details.yelpInfo.snippet_text}}</p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a>
+                    <span ng-if='authenticated'><input type="checkbox" autocomplete="off" ng-model="favorite" ng-change='toggleFavorite(favorite)'> Favorite</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,22 +31,52 @@ userSchema.statics.addFavorite = function(userId, yelpInfo, cb) {
   this.findById(userId, (err, user) => {
     if (err) return cb(err);
 
-    Business.findOne({ yelpId: yelpInfo.yelpId }, (err, business) => {
+    Business.findOne({ yelpId: yelpInfo.id }, (err, business) => {
       if (err) return cb(err);
       if (business) {
         user.favorites.push(business._id);
-        business.favoriteIncrease((err, business) => {
+        console.log(userId);
+        business.users.push(userId);
+        business.save((err, savedBus) => {
           if (err) return cb(err);
-          cb(null, business);
+          business.favoriteIncrease((err, business) => {
+            if (err) return cb(err);
+            cb(null, business);
+          });
+
         });
 
       } else {
-        Business.create({ yelpId: yelpInfo.yelpId, name: yelpInfo.name, favoriteCount: 1 }, (err, savedBus) => {
+        Business.create({ yelpId: yelpInfo.id, name: yelpInfo.name, favoriteCount: 1 }, (err, savedBus) => {
           if (err) return cb(err);
           user.favorites.push(savedBus._id);
           cb(null, savedBus);
         });
       };
+    });
+  });
+};
+
+
+userSchema.statics.removeFavorite = function(userId, yelpInfo, cb) {
+  this.findById(userId, (err, user) => {
+    if (err) return cb(err);
+    
+    console.log(user);
+
+    Business.findOne({ yelpId: yelpInfo.id }, (err, business) => {
+      if (err) return cb(err);
+      business.users.pull(user._id);
+      business.favorites--;
+      business.save((err, savedBus) => {
+        if(err) return cb(err);
+        console.log('business:', savedBus);
+        user.favorites.pull(business._id);
+        user.save(cb);
+      });
+
+
+ 
     });
   });
 };

@@ -19,7 +19,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/',
-      templateUrl: '/html/home.html'
+      templateUrl: '/html/home.html',
+      controller: 'homeCtrl'
     })
     .state('register', {
       url: '/register',
@@ -30,6 +31,27 @@ app.config(function($stateProvider, $urlRouterProvider) {
       url: '/login',
       templateUrl: '/html/login.html',
       controller: 'loginCtrl'
+    })
+    .state('search', {
+      url: '/search/:name/:location', 
+      templateUrl: '/html/search.html',
+      controller: 'searchCtrl',
+      resolve: {
+        Businesses: function(Business, $stateParams) {
+          return Business.search($stateParams.name);
+        }
+      }
+    })
+    .state('details' , {
+      url: '/:yelpId',
+      templateUrl: '/html/details.html',
+      controller: 'detailsCtrl',
+      resolve: {
+        Details: function(Business, $stateParams) {
+          return Business.details($stateParams.yelpId);
+        }
+
+      }
     })
 
   $urlRouterProvider.otherwise('/');

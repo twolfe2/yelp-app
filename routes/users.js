@@ -15,14 +15,23 @@ const FACEBOOK_SECRET = process.env.FACEBOOK_SECRET;
 /// /api/users
 
 router.post('/addFavorite', User.authorize({admin: false}), (req,res) => {
-  User.addFavorite(req.body.userId, req.body.yelpInfo, (err, business) => {
+  // console.log('req.user:',req.user);
+  // console.log('req.body.yelpInfo:', req.body.yelpInfo);
+  User.addFavorite(req.user._id, req.body.yelpInfo, (err, business) => {
     if(err) return res.status(400).send(err);
     res.send(business);
   });
 });
 
 
-
+router.post('/removeFavorite', User.authorize({admin: false}), (req,res) => {
+  // console.log('req.user:',req.user);
+  // console.log('req.body.yelpInfo:', req.body.yelpInfo);
+  User.removeFavorite(req.user._id, req.body.yelpInfo, (err, business) => {
+    if(err) return res.status(400).send(err);
+    res.send(business);
+  });
+});
 
 
 router.get('/profile', User.authorize({admin: false}), (req,res) => {

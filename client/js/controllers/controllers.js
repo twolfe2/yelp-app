@@ -32,7 +32,51 @@ app.controller('mainCtrl', function($scope, $state, $auth, $rootScope) {
 
 });
 
+app.controller('homeCtrl', function($scope, $state, Business) {
+  $scope.businessSearch = () => {
+        $state.go('search', {name: $scope.businessName, location: $scope.businessLocation});
+  };
+});
 
+
+app.controller('searchCtrl', function($scope, $state, $stateParams, Businesses) {
+  console.log(Businesses);
+  $scope.businesses = Businesses.businesses;
+
+});
+
+
+app.controller('detailsCtrl', function($scope, $state, $stateParams, Details, Business,$rootScope, $auth) {
+  $scope.authenticated = false;
+  console.log('details ctrl');
+  console.log(Details);
+  $scope.details = Details;
+
+  if($scope.details.favoriteCount && $auth.isAuthenticated()) {
+    $rootScope.currUser = $auth.getPayload();
+    $scope.authenticated = true;
+    console.log('curr user',$rootScope);
+    $scope.favorite = $scope.details.users.includes($rootScope.currUser._id);
+  }
+  let favorite = $scope.favorite;
+  $scope.toggleFavorite = (toggle) => {
+    
+    if(toggle) {
+      Business.addFavorite($scope.details.yelpInfo)
+        .then(res => {
+          console.log(res.data);
+        });
+    } else {
+      Business.removeFavorite($scope.details.yelpInfo)
+        .then(res => {
+          console.log(res.data);
+        })
+    }
+  };
+
+
+
+});
 
 app.controller('loginCtrl', function($scope, $state, $auth, $rootScope) {
   // console.log('loginCtrl!');

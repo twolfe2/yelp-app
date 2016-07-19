@@ -1,3 +1,22 @@
 <div class="container">
-  Hello from public/home.html
+    <div class="text-center">
+        <h1>Yelp Business Search</h1>
+    </div>
+    <div class="col-md-offset-4">
+        <div class="col-md-6">
+            <form ng-submit='businessSearch()'>
+                <div class="input-group">
+                    <span class='searchInput'>
+                        
+                    <input class='form-control' type="text" placeholder="Business name" required ng-model='businessName'>
+                    <input class='form-control' type="text" placeholder="Location" required ng-model='businessLocation'>
+                    </span>
+                    <span class="input-group-btn">
+        <button class="btn btn-primary">Search</button>
+      </span>
+            </form>
+            </div>
+        </div>
+    </div>
+    
 </div>

@@ -73,7 +73,7 @@ gulp.task('clean:html', function() {
 
 
 gulp.task('watch:html', function() {
-  gulp.watch(paths.html.input, ['html','bs-reload']);
+  gulp.watch(paths.html.input, ['html', browserSync.reload]);
 
 });
 
